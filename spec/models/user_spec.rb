@@ -41,7 +41,7 @@ RSpec.describe User, type: :model do
     it 'nicknameが41文字以上では登録できない' do
       @user.nickname = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
       @user.valid?
-      expect(@user.errors.full_messages).to include('Nickname is too long (maximum is 6 characters)')
+      expect(@user.errors.full_messages).to include("Nickname is too long (maximum is 40 characters)")
     end
     it '重複したemailが存在する場合登録できない' do
       @user.save
@@ -75,6 +75,26 @@ RSpec.describe User, type: :model do
       @user.last_name_kana = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("Last name kana can't be blank")
+    end
+    it "名字は全角（漢字・ひらがな・カタカナ）でなければ登録できない" do
+      @user.first_name_kana = "kana"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("First name kana is invalid")
+    end
+    it "名前は全角（漢字・ひらがな・カタカナ）でなければ登録できない" do
+      @user.last_name_kana = "kana"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Last name kana is invalid")
+    end
+    it 'first_name_kanaが全角カタカナでなければ登録できないこと' do
+      @user.first_name_kana = "かな"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("First name kana is invalid")
+    end
+    it 'last_name_kanaが全角カタカナでなければ登録できないこと' do
+      @user.last_name_kana = "かな"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Last name kana is invalid")
     end
     it 'birth_dayがない場合は登録できないこと' do
       @user.birth_day = ''

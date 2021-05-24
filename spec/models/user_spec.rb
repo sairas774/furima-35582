@@ -56,27 +56,27 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
     end
-    it "first_nameがない場合は登録できないこと" do
+    it 'first_nameがない場合は登録できないこと' do
       @user.first_name = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("First name can't be blank")
     end
-    it "last_nameがない場合は登録できないこと" do
+    it 'last_nameがない場合は登録できないこと' do
       @user.last_name = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("Last name can't be blank")
     end
-    it "first_name_kanaがない場合は登録できないこと" do
+    it 'first_name_kanaがない場合は登録できないこと' do
       @user.first_name_kana = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("First name kana can't be blank")
     end
-    it "last_name_kanaがない場合は登録できないこと" do
+    it 'last_name_kanaがない場合は登録できないこと' do
       @user.last_name_kana = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("Last name kana can't be blank")
     end
-    it "birth_dayがない場合は登録できないこと" do
+    it 'birth_dayがない場合は登録できないこと' do
       @user.birth_day = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("Birth day can't be blank")

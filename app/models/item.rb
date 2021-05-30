@@ -13,7 +13,7 @@ class Item < ApplicationRecord
     validates :shipping_area
     validates :days_to_ship
     validates :price, inclusion: { in: 300..9_999_999 },
-    format: { with: /\A[0-9]+\z/ }
+                      format: { with: /\A[0-9]+\z/ }
   end
 
   belongs_to_active_hash :category

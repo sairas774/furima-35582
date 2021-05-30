@@ -30,62 +30,62 @@ RSpec.describe Item, type: :model do
       it 'categoryが未選択だと出品できない' do
         @item.category_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category must be other than 0")
+        expect(@item.errors.full_messages).to include('Category must be other than 0')
       end
       it 'item_conditionが未選択だと出品できない' do
         @item.items_condition_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("Items condition must be other than 0")
+        expect(@item.errors.full_messages).to include('Items condition must be other than 0')
       end
       it 'shipping_chargeが未選択だと出品できない' do
         @item.shipping_charge_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping charge must be other than 0")
+        expect(@item.errors.full_messages).to include('Shipping charge must be other than 0')
       end
       it 'shipping_areaが未選択だと出品できない' do
         @item.shipping_area_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping area must be other than 0")
+        expect(@item.errors.full_messages).to include('Shipping area must be other than 0')
       end
       it 'days_of_shipが未選択だと出品できない' do
         @item.days_to_ship_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("Days to ship must be other than 0")
+        expect(@item.errors.full_messages).to include('Days to ship must be other than 0')
       end
       it 'priceが空だと出品できない' do
         @item.price = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
-      it "価格が299円以下だと出品できない" do
+      it '価格が299円以下だと出品できない' do
         @item.price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not included in the list")
+        expect(@item.errors.full_messages).to include('Price is not included in the list')
       end
-      it "価格が10000000円以上だと出品できない" do
-        @item.price = 10000001
+      it '価格が10000000円以上だと出品できない' do
+        @item.price = 10_000_001
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not included in the list")
+        expect(@item.errors.full_messages).to include('Price is not included in the list')
       end
       it 'priceが全角数字だと出品できない' do
-        @item.price = "２０００"
+        @item.price = '２０００'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not a number")
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
       it 'priceが全角英字では出品できない' do
         @item.price = 'THREEMILLION'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is not included in the list')
       end
-      it "priceが半角英数混合では登録できないこと" do
-        @item.price = "300dollars"
+      it 'priceが半角英数混合では登録できないこと' do
+        @item.price = '300dollars'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not a number")
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
-      it "priceが半角英語だけでは登録できないこと" do
-        @item.price = "threemillion"
+      it 'priceが半角英語だけでは登録できないこと' do
+        @item.price = 'threemillion'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not included in the list")
+        expect(@item.errors.full_messages).to include('Price is not included in the list')
       end
     end
   end

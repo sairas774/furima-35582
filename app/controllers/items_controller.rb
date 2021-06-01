@@ -15,13 +15,22 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @item = Item.new
+    if user_signed_in?
+      @item = Item.new
+    else
+      redirect_to user_session_path(@item.id)
+    end
+  end
+
+  def show
+    @item = Item.find(params[:id])
   end
 
   private
 
   def item_params
     params.require(:item).permit(:name, :description_of_item, :category_id, :items_condition_id,
-                                 :shipping_charge_id, :shipping_area_id, :days_to_ship_id, :price, :image).merge(user_id: current_user.id)
+                                 :shipping_charge_id, :shipping_area_id, :days_to_ship_id, :price, :image)
+          .merge(user_id: current_user.id)
   end
 end

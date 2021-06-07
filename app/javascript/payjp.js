@@ -3,15 +3,13 @@ const pay = () => {
   const form = document.getElementById("charge-form");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-
     const formResult = document.getElementById("charge-form");
     const formData = new FormData(formResult);
-
     const card = {
-      number:    formData.get("card-number"),
-      cvc:       formData.get("card-cvc"),
-      exp_month: formData.get("card-exp-month"),
-      exp_year:  `20${formData.get("card-exp-year")}`,
+      number:    formData.get("purchase_shipping_address[number]"),
+      cvc:       formData.get("purchase_shipping_address[cvc]"),
+      exp_month: formData.get("purchase_shipping_address[exp_month]"),
+      exp_year:  `20${formData.get("purchase_shipping_address[exp_year]")}`,
     };
     Payjp.createToken(card, (status, response) => {
       if (status == 200) {
@@ -24,7 +22,6 @@ const pay = () => {
       document.getElementById("card-cvc").removeAttribute("name");
       document.getElementById("card-exp-month").removeAttribute("name");
       document.getElementById("card-exp-year").removeAttribute("name");
-
       document.getElementById("charge-form").submit();
       document.getElementById("charge-form").reset();
     });

@@ -23,14 +23,14 @@ RSpec.describe PurchaseShippingAddress, type: :model do
         expect(@purchase_shipping_address.errors.full_messages).to include("Postal code can't be blank")
       end
       it 'postal_codeにハイフンがないと購入できない' do
-        @purchase_shipping_address.postal_code = "1234567"
+        @purchase_shipping_address.postal_code = '1234567'
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Postal code is invalid")
+        expect(@purchase_shipping_address.errors.full_messages).to include('Postal code is invalid')
       end
       it 'shipping_area_idが未選択だと購入できない' do
         @purchase_shipping_address.shipping_area_id = 0
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Shipping area must be other than 0")
+        expect(@purchase_shipping_address.errors.full_messages).to include('Shipping area must be other than 0')
       end
       it 'municipalityが空だと購入できない' do
         @purchase_shipping_address.municipality = nil
@@ -40,7 +40,8 @@ RSpec.describe PurchaseShippingAddress, type: :model do
       it 'addressが空だと購入できない' do
         @purchase_shipping_address.shipping_area_id = nil
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Shipping area can't be blank", "Shipping area is not a number")
+        expect(@purchase_shipping_address.errors.full_messages).to include("Shipping area can't be blank",
+                                                                           'Shipping area is not a number')
       end
       it 'phone_numberが空だと購入できない' do
         @purchase_shipping_address.phone_number = nil
@@ -48,14 +49,14 @@ RSpec.describe PurchaseShippingAddress, type: :model do
         expect(@purchase_shipping_address.errors.full_messages).to include("Phone number can't be blank")
       end
       it 'phone_numberが10桁では購入できない' do
-        @purchase_shipping_address.phone_number = "0901234567"
+        @purchase_shipping_address.phone_number = '0901234567'
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include()
+        expect(@purchase_shipping_address.errors.full_messages).to include
       end
       it 'phone_numberが全角数字だと出品できない' do
         @purchase_shipping_address.phone_number = '２０００２０２１０６'
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Phone number is invalid")
+        expect(@purchase_shipping_address.errors.full_messages).to include('Phone number is invalid')
       end
     end
   end

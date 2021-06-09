@@ -42,10 +42,9 @@ RSpec.describe PurchaseShippingAddress, type: :model do
         expect(@purchase_shipping_address.errors.full_messages).to include("Municipality can't be blank")
       end
       it 'addressが空だと購入できない' do
-        @purchase_shipping_address.shipping_area_id = nil
+        @purchase_shipping_address.address = nil
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Shipping area can't be blank",
-                                                                           'Shipping area is not a number')
+        expect(@purchase_shipping_address.errors.full_messages).to include("Address can't be blank")
       end
       it 'phone_numberが空だと購入できない' do
         @purchase_shipping_address.phone_number = nil

@@ -4,8 +4,9 @@ FactoryBot.define do
     shipping_area_id   { 1 }
     municipality       { '札幌市北区' }
     address            { '北８−５' }
-    building_name      { '門倉ビル３０１' }
+    building_name      { '門倉ビル301' }
     phone_number       { '08034567890' }
+    token              { 'token_test' }
     association :user
     association :item
   end

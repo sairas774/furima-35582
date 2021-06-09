@@ -7,7 +7,7 @@ RSpec.describe PurchaseShippingAddress, type: :model do
     @item.image = fixture_file_upload('app/assets/images/item-sample.png')
     @item.save
     @purchase_shipping_address = FactoryBot.build(:purchase_shipping_address, user_id: @user.id, item_id: @item.id)
-    sleep 0.1
+    sleep 0.1  # 処理の時間が掛かり、テストコードが動かない場合に備えて記述
   end
 
   describe '購入内容確認' do
@@ -53,10 +53,15 @@ RSpec.describe PurchaseShippingAddress, type: :model do
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include
       end
-      it 'phone_numberが全角数字だと出品できない' do
+      it 'phone_numberが全角数字だと購入できない' do
         @purchase_shipping_address.phone_number = '２０００２０２１０６'
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include('Phone number is invalid')
+      end
+      it 'tokenが生成されなければ購入できない' do
+        @purchase_shipping_address.token = nil
+        @purchase_shipping_address.valid?
+        expect(@purchase_shipping_address.errors.full_messages).to include("Token can't be blank")
       end
     end
   end

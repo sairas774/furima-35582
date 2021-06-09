@@ -15,6 +15,10 @@ RSpec.describe PurchaseShippingAddress, type: :model do
       it '全ての値が正しく入力されていれば購入できること' do
         expect(@purchase_shipping_address).to be_valid
       end
+      it '建物名がなくても購入できること' do
+        @purchase_shipping_address.building_name = ''
+        expect(@purchase_shipping_address).to be_valid
+      end
     end
     context '商品購入がうまくいかない時' do
       it 'postal_codeが空だと購入できない' do
@@ -48,8 +52,8 @@ RSpec.describe PurchaseShippingAddress, type: :model do
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include("Phone number can't be blank")
       end
-      it 'phone_numberが10桁では購入できない' do
-        @purchase_shipping_address.phone_number = '0901234567'
+      it 'phone_numberが12桁以上では購入できない' do
+        @purchase_shipping_address.phone_number = '090123456789'
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include
       end

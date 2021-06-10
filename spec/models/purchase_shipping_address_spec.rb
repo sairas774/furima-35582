@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PurchaseShippingAddress, type: :model do
   before do
     @user = FactoryBot.create(:user)
-    @item = FactoryBot.build(:item)
+    @item = FactoryBot.create(:item)
     @item.image = fixture_file_upload('app/assets/images/item-sample.png')
     @item.save
     @purchase_shipping_address = FactoryBot.build(:purchase_shipping_address, user_id: @user.id, item_id: @item.id)

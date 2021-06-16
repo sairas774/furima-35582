@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.describe PurchaseShippingAddress, type: :model do
   before do
     @user = FactoryBot.create(:user)
-    @item = FactoryBot.create(:item)
+    @item = FactoryBot.create(:item, user_id: @user.id)
     @item.image = fixture_file_upload('app/assets/images/item-sample.png')
     @item.save
     @purchase_shipping_address = FactoryBot.build(:purchase_shipping_address, user_id: @user.id, item_id: @item.id)
-    sleep 0.1  # 処理の時間が掛かり、テストコードが動かない場合に備えて記述
+    sleep (1)  # 処理の時間が掛かり、テストコードが動かない場合に備えて記述
   end
 
   describe '購入内容確認' do
@@ -21,65 +21,65 @@ RSpec.describe PurchaseShippingAddress, type: :model do
       end
     end
     context '商品購入がうまくいかない時' do
-      it 'postal_codeが空だと購入できない' do
+      it '郵便番号が空だと購入できない' do
         @purchase_shipping_address.postal_code = nil
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Postal code can't be blank")
+        expect(@purchase_shipping_address.errors.full_messages).to include("郵便番号を入力してください")
       end
-      it 'postal_codeにハイフンがないと購入できない' do
+      it '郵便番号にハイフンがないと購入できない' do
         @purchase_shipping_address.postal_code = '1234567'
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include('Postal code is invalid')
+        expect(@purchase_shipping_address.errors.full_messages).to include("郵便番号は不正な値です")
       end
-      it 'shipping_area_idが未選択だと購入できない' do
+      it '都道府県が未選択だと購入できない' do
         @purchase_shipping_address.shipping_area_id = 0
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include('Shipping area must be other than 0')
+        expect(@purchase_shipping_address.errors.full_messages).to include("都道府県の入力は選択肢より選んでください")
       end
-      it 'municipalityが空だと購入できない' do
+      it '市区町村が空だと購入できない' do
         @purchase_shipping_address.municipality = nil
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Municipality can't be blank")
+        expect(@purchase_shipping_address.errors.full_messages).to include("市区町村を入力してください")
       end
-      it 'addressが空だと購入できない' do
+      it '番地が空だと購入できない' do
         @purchase_shipping_address.address = nil
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Address can't be blank")
+        expect(@purchase_shipping_address.errors.full_messages).to include("番地を入力してください")
       end
-      it 'phone_numberが空だと購入できない' do
+      it '電話番号が空だと購入できない' do
         @purchase_shipping_address.phone_number = nil
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Phone number can't be blank")
+        expect(@purchase_shipping_address.errors.full_messages).to include("電話番号を入力してください")
       end
-      it 'phone_numberが12桁以上では購入できない' do
+      it '電話番号が12桁以上では購入できない' do
         @purchase_shipping_address.phone_number = '090123456789'
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include
+        expect(@purchase_shipping_address.errors.full_messages).to include("電話番号は不正な値です")
       end
-      it 'phone_numberが全角数字だと購入できない' do
+      it '電話番号が全角数字だと購入できない' do
         @purchase_shipping_address.phone_number = '２０００２０２１０６'
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include('Phone number is invalid')
+        expect(@purchase_shipping_address.errors.full_messages).to include("電話番号は不正な値です")
       end
-      it 'phone_numberが英数混合だと購入できない' do
+      it '電話番号が英数混合だと購入できない' do
         @purchase_shipping_address.phone_number = '012a3456b78'
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include('Phone number is invalid')
+        expect(@purchase_shipping_address.errors.full_messages).to include("電話番号は不正な値です")
       end
-      it 'tokenが生成されなければ購入できない' do
+      it 'カード情報が生成されなければ購入できない' do
         @purchase_shipping_address.token = nil
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Token can't be blank")
+        expect(@purchase_shipping_address.errors.full_messages).to include("カード情報を入力してください")
       end
-      it 'user_idが空では購入できない' do
+      it '出品者が空では購入できない' do
         @purchase_shipping_address.user_id = nil
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("User can't be blank")
+        expect(@purchase_shipping_address.errors.full_messages).to include("出品者を入力してください")
       end
-      it 'item_idが空では購入できない' do
+      it '商品が空では購入できない' do
         @purchase_shipping_address.item_id = nil
         @purchase_shipping_address.valid?
-        expect(@purchase_shipping_address.errors.full_messages).to include("Item can't be blank")
+        expect(@purchase_shipping_address.errors.full_messages).to include("商品を入力してください")
       end
     end
   end

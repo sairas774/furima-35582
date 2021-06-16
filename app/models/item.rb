@@ -24,6 +24,6 @@ class Item < ApplicationRecord
   belongs_to_active_hash :days_to_ship
 
   validates :category_id, :items_condition_id, :shipping_charge_id,
-            :shipping_area_id, :days_to_ship_id, numericality: { other_than: 0 }
+            :shipping_area_id, :days_to_ship_id, numericality: { other_than: 0 , message: 'の入力は選択肢より選んでください'}
   validates :price, numericality: true
 end

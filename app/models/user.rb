@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
-  validates_format_of :password, with: PASSWORD_REGEX, message: 'is invalid'
+  validates_format_of :password, with: PASSWORD_REGEX
 
   with_options presence: true do
     validates :nickname, length: { maximum: 40 }

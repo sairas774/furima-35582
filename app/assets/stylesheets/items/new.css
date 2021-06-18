@@ -227,3 +227,11 @@
 .inc {
   font-size: 13px;
 }
+
+/* プレビュー機能により追記 */
+
+#product-image {
+  max-width: 400px;
+  height: auto;
+  margin-top: 30px;
+}

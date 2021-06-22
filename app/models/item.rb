@@ -5,7 +5,7 @@ class Item < ApplicationRecord
   has_one                :purchase
 
   with_options presence: true do
-    validates :image
+    validates :image, presence: { message: 'を選択してください'}
     validates :name
     validates :description_of_item
     validates :category

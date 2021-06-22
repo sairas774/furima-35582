@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function(){
      ImageList.appendChild(imageElement);
    };
     document.getElementById('item-image').addEventListener('change', function(e){
-      const imageContent = document.querySelector('img');
+      const imageContent = document.querySelector('#product-image');
       if (imageContent){
         imageContent.remove();
       }
